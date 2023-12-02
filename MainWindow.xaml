@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         FontSize="14"
         WindowStartupLocation="CenterScreen"
-        Title="FileCopy" Height="730" Width="900">
+        Title="FileCopy" Height="744" Width="900">
     <Grid Margin="10">
         <StackPanel>
             <!-- 文件夹选择和扫描区块 -->
@@ -56,7 +56,7 @@
             </GroupBox>
 
             <!-- 筛选结果预览区块 -->
-            <GroupBox Header="筛选结果预览" Margin="10 0 10 10">
+            <GroupBox Header="筛选结果预览" Margin="10 0 10 2">
                 <StackPanel Margin="10">
                     <ListView x:Name="FilesListView" MouseDoubleClick="FilesListView_MouseDoubleClick" Height="300">
                         <ListView.View>
@@ -92,7 +92,7 @@
         </StackPanel>
         <Grid x:Name="Overlay" Background="#AAFFFFFF" Visibility="Collapsed" Panel.ZIndex="100">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock x:Name="LoadingText" Text="处理中..." FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                <TextBlock x:Name="LoadingText" Text="处理中..." FontSize="22" FontWeight="Bold" Margin="0,0,0,10"/>
                 <ProgressBar  x:Name="Progress" Width="200" Height="20"/>
             </StackPanel>
         </Grid>
