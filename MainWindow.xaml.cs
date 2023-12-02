@@ -80,7 +80,7 @@ namespace FileCopy
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string _authorInfo = "© 2023 RQ - 版本 1.0.1";
+        private string _authorInfo = "© 2023 RQ - 版本 1.0.2";
 
         public string AuthorInfo
         {
