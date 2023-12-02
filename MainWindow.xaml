@@ -1,11 +1,11 @@
-﻿<Window x:Class="EasyPicOrganizer.MainWindow"
+﻿<Window x:Class="PicMoverEasy.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EasyPicOrganizer"
+        xmlns:local="clr-namespace:PicMoverEasy"
         mc:Ignorable="d"
-        Title="EasyPicOrganizer" Height="710" Width="900">
+        Title="PicMoverEasy" Height="710" Width="900">
     <Grid Margin="10">
         <StackPanel>
             <!-- 文件夹选择和扫描区块 -->

@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Ookii.Dialogs.Wpf;
 
-namespace EasyPicOrganizer
+namespace PicMoverEasy
 {
     class EasyFile : INotifyPropertyChanged
     {
