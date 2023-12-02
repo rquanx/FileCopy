@@ -61,7 +61,7 @@ namespace EasyPicOrganizer
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -72,8 +72,8 @@ namespace EasyPicOrganizer
 
     public partial class MainWindow : Window
     {
-        private string sourceFolderPath;
-        private string targetFolderPath;
+        private string sourceFolderPath = string.Empty;
+        private string targetFolderPath = string.Empty;
         private List<EasyFile> fileList = new List<EasyFile>();
         private List<EasyFile> filteredList = new List<EasyFile>();
         private const int ItemsPerPage = 20; // 每页显示数量
