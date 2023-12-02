@@ -70,8 +70,27 @@ namespace PicMoverEasy
 
     }
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string _authorInfo = "© 2023 RQ - 版本 1.0.1";
+
+        public string AuthorInfo
+        {
+            get => _authorInfo;
+            set
+            {
+                _authorInfo = value;
+                OnPropertyChanged(nameof(AuthorInfo));
+            }
+        }
         private string sourceFolderPath = string.Empty;
         private string targetFolderPath = string.Empty;
         private List<EasyFile> fileList = new List<EasyFile>();
@@ -83,6 +102,7 @@ namespace PicMoverEasy
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void SelectSourceFolder_Click(object sender, RoutedEventArgs e)

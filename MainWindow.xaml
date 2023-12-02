@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PicMoverEasy"
         mc:Ignorable="d"
-        Title="PicMoverEasy" Height="710" Width="900">
+        Title="PicMoverEasy" Height="730" Width="900">
     <Grid Margin="10">
         <StackPanel>
             <!-- 文件夹选择和扫描区块 -->
@@ -84,7 +84,9 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="{Binding AuthorInfo}"/>
+            </StackPanel>
         </StackPanel>
         <Grid x:Name="Overlay" Background="#AAFFFFFF" Visibility="Collapsed" Panel.ZIndex="100">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -92,5 +94,6 @@
                 <ProgressBar  x:Name="Progress" Width="200" Height="20"/>
             </StackPanel>
         </Grid>
+
     </Grid>
 </Window>
