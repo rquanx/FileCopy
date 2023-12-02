@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Ookii.Dialogs.Wpf;
 
-namespace PicMoverEasy
+namespace FileCopy
 {
     class EasyFile : INotifyPropertyChanged
     {
