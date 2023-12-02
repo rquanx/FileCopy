@@ -5,8 +5,92 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyPicOrganizer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="EasyPicOrganizer" Height="800" Width="900">
+    <Grid Margin="10">
+        <StackPanel>
+            <!-- 文件夹选择和扫描区块 -->
+            <GroupBox Header="文件夹选择与扫描" Margin="10,10,10,20">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                        <Button Content="选择源文件夹" Click="SelectSourceFolder_Click" Width="120"/>
+                        <TextBlock x:Name="SourceFolderPath" Text="未选择" Margin="5" VerticalAlignment="Center" Foreground="RoyalBlue"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <Button Content="选择目标文件夹" Click="SelectTargetFolder_Click" Width="120"/>
+                        <TextBlock x:Name="TargetFolderPath" Text="未选择" Margin="5" VerticalAlignment="Center" Foreground="RoyalBlue"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                        <Button Content="扫描图片" Click="ScanFiles_Click" Width="120" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="ScannedFilesCount" Text="扫描图片总数：0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
 
+            <!-- 条件筛选区块 -->
+            <GroupBox Header="筛选条件" Margin="10,0,10,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                            <Label Content="文件名模式:" Width="100"/>
+                            <TextBox x:Name="FileNamePattern" Width="200" Margin="5"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label Content="创建日期:" Width="100"/>
+                            <DatePicker x:Name="CreatedAfterPicker" Width="200" Margin="5"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="10">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                            <Label Content="编辑日期:" Width="100"/>
+                            <DatePicker x:Name="ModifiedAfterPicker" Width="200" Margin="5"/>
+                        </StackPanel>
+                        <Button Content="按条件筛选" Click="FilterFiles_Click" Width="120" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <!-- 筛选结果预览区块 -->
+            <GroupBox Header="筛选结果预览" Margin="10">
+                <StackPanel>
+                    <ListView x:Name="FilesListView" MouseDoubleClick="FilesListView_MouseDoubleClick" Height="300">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="文件名" DisplayMemberBinding="{Binding Name}" Width="380"/>
+                                <GridViewColumn Header="创建时间" DisplayMemberBinding="{Binding CreationTime}" Width="150"/>
+                                <GridViewColumn Header="编辑时间" DisplayMemberBinding="{Binding LastWriteTime}" Width="150"/>
+                                <GridViewColumn Header="复制结果" DisplayMemberBinding="{Binding IsCoped}" Width="80"/>
+                                <GridViewColumn Header="操作">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="去除" Click="DeleteItem_Click"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Content="去除已复制" Click="RemoveCoped_Click" Width="120" Margin="0,0,10,0"/>
+                        <Button Content="&lt;&lt;" Click="FirstPage_Click" Margin="0,0,10,0" />
+                        <Button Content="上一页" Click="PreviousPage_Click"/>
+                        <TextBlock x:Name="PageInfo" Margin="10,0" VerticalAlignment="Center"/>
+                        <Button Content="下一页" Click="NextPage_Click"/>
+                        <Button Content=">>" Click="LastPage_Click" Margin="10,0,0,0"/>
+                        <Button Content="确定复制" Click="CopyFiles_Click" Width="120" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+        <Grid x:Name="Overlay" Background="#AAFFFFFF" Visibility="Collapsed" Panel.ZIndex="100">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="LoadingText" Text="处理中..." FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                <ProgressBar  x:Name="Progress" Width="200" Height="20"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
