@@ -148,7 +148,7 @@ namespace PicMoverEasy
 
             });
 
-            ScannedFilesCount.Text = $"扫描图片总数：{fileList.Count}";
+            ScannedFilesCount.Text = $"扫描文件总数：{fileList.Count}";
             HideOverlay();
 
             filteredList = new List<EasyFile>();
@@ -160,7 +160,7 @@ namespace PicMoverEasy
         {
             if (fileList.Count() == 0)
             {
-                MessageBox.Show("未扫描或扫描出图片数量为0.");
+                MessageBox.Show("未扫描或扫描出文件数量为0.");
                 return;
             }
             filteredList = fileList.Where(fileInfo =>
@@ -280,7 +280,7 @@ namespace PicMoverEasy
         {
             if (FilesListView.SelectedItem is EasyFile selectedFile)
             {
-                // 尝试打开图片
+                // 尝试打开文件
                 try
                 {
                     var startInfo = new System.Diagnostics.ProcessStartInfo

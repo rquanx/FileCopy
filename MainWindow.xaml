@@ -22,8 +22,8 @@
                         <TextBlock x:Name="TargetFolderPath" Text="未选择" Margin="5" VerticalAlignment="Center" Foreground="RoyalBlue"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                        <Button Content="扫描图片" Click="ScanFiles_Click" Width="120" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="ScannedFilesCount" Text="扫描图片总数：0" VerticalAlignment="Center"/>
+                        <Button Content="扫描文件" Click="ScanFiles_Click" Width="120" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="ScannedFilesCount" Text="扫描文件总数：0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
