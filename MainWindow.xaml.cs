@@ -225,10 +225,17 @@ namespace FileCopy
                 MessageBox.Show("源文件夹和目标文件夹不应该相同。");
                 return;
             }
+            int totalFiles = filteredList.Count;
+            if(totalFiles == 0)
+            {
+                return;
+            }
+
             ShowOverlay("正在复制...");
 
-            int totalFiles = filteredList.Count;
             int copiedFiles = 0;
+            int successCount = 0;
+            int failCount = 0;
             await Task.Run(() =>
             {
                 foreach (var file in filteredList)
@@ -238,10 +245,12 @@ namespace FileCopy
                     {
                         File.Copy(file.FullName, destFile, true);
                         file.IsCoped = "是";
+                        successCount++;
                     }
                     catch (Exception ex)
                     {
                         file.IsCoped = $"否：{ex.Message}";
+                        failCount++;
                     }
 
                     copiedFiles++;
@@ -249,6 +258,7 @@ namespace FileCopy
                 }
             });
             HideOverlay();
+            MessageBox.Show($"复制完成，成功：{successCount} 失败：{failCount}");
         }
 
         private void ShowOverlay(string message, bool progress = true)
