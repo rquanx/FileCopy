@@ -158,11 +158,10 @@ namespace FileCopy
                 MessageBox.Show("未扫描或扫描出文件数量为0.");
                 return;
             }
-            filteredList = fileList.Where(fileInfo =>
-                (string.IsNullOrWhiteSpace(FileNamePattern.Text) || fileInfo.Name.Contains(FileNamePattern.Text)) &&
-                (!CreatedAfterPicker.SelectedDate.HasValue || fileInfo.CreationTime > CreatedAfterPicker.SelectedDate.Value) &&
-                (!ModifiedAfterPicker.SelectedDate.HasValue || fileInfo.LastWriteTime > ModifiedAfterPicker.SelectedDate.Value))
-                .ToList();
+            filteredList = fileList.Where(fileInfo => (string.IsNullOrWhiteSpace(FileNamePattern.Text) || fileInfo.Name.Contains(FileNamePattern.Text)) &&
+            (!CreatedAfterPicker.SelectedDate.HasValue || fileInfo.CreationTime?.Date == CreatedAfterPicker.SelectedDate.Value.Date) &&
+            (!ModifiedAfterPicker.SelectedDate.HasValue || fileInfo.LastWriteTime?.Date == ModifiedAfterPicker.SelectedDate.Value.Date))
+            .ToList();
             DisplayPage(1);
         }
 
@@ -226,7 +225,7 @@ namespace FileCopy
                 return;
             }
             int totalFiles = filteredList.Count;
-            if(totalFiles == 0)
+            if (totalFiles == 0)
             {
                 return;
             }
