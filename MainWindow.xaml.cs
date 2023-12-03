@@ -3,6 +3,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using Shell32;
+using MessageBox = System.Windows.MessageBox;
+using Button = System.Windows.Controls.Button;
 
 namespace FileCopy
 {
@@ -102,13 +106,17 @@ namespace FileCopy
 
         private void SelectSourceFolder_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new VistaFolderBrowserDialog();
-            if (dialog.ShowDialog() == true)
+            Shell shell = new Shell();
+            Folder folder = shell.BrowseForFolder(0, "Choose Folder", 0, 0);
+            if (folder == null)
             {
-                sourceFolderPath = dialog.SelectedPath;
-                SourceFolderPath.Text = sourceFolderPath;
-                SourceFolderPath.MouseDown += (s, args) => OpenFolder(sourceFolderPath);
+                return;
             }
+
+            FolderItem fi = (folder as Folder3).Self;
+            sourceFolderPath = fi.Path;
+            SourceFolderPath.Text = sourceFolderPath;
+            SourceFolderPath.MouseDown += (s, args) => OpenFolder(sourceFolderPath);
         }
 
         private void SelectTargetFolder_Click(object sender, RoutedEventArgs e)
@@ -133,6 +141,25 @@ namespace FileCopy
 
             await Task.Run(() =>
             {
+
+                //try
+                //{
+                //    Shell shell = new Shell();
+                //    Folder dir = shell.NameSpace(sourceFolderPath);
+
+                //    List<string> list = new List<string>();
+                //    foreach (FolderItem curr in dir.Items())
+                //    {
+
+                //        list.Add(curr.Name);
+                //    }
+                //    folderItems = list.ToArray();
+                //}
+                //catch (Exception e)
+                //{
+                //    MessageBox.Show(e.ToString());
+                //}
+
                 fileList.Clear();
                 var files = Directory.EnumerateFiles(sourceFolderPath, "*.*", SearchOption.AllDirectories);
                 foreach (var file in files)
