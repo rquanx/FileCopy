@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Ookii.Dialogs.Wpf;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using Ookii.Dialogs.Wpf;
 
 namespace FileCopy
 {
