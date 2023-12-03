@@ -62,8 +62,20 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="文件名" DisplayMemberBinding="{Binding Name}" Width="380"/>
-                                <GridViewColumn Header="创建时间" DisplayMemberBinding="{Binding CreationTime}" Width="140"/>
-                                <GridViewColumn Header="编辑时间" DisplayMemberBinding="{Binding LastWriteTime}" Width="140"/>
+                                <GridViewColumn Header="创建时间" Width="140">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CreationTime, StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="编辑时间"  Width="140">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding LastWriteTime, StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn Header="复制结果" DisplayMemberBinding="{Binding IsCoped}" Width="80"/>
                                 <GridViewColumn Header="操作">
                                     <GridViewColumn.CellTemplate>
