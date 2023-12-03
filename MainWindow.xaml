@@ -37,7 +37,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Margin="10">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
-                            <Label Content="文件名模式:" Width="100"/>
+                            <Label Content="文件名:" Width="100"/>
                             <TextBox x:Name="FileNamePattern" Width="200" Margin="5"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
