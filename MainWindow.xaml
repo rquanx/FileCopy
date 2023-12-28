@@ -29,32 +29,34 @@
             </GroupBox>
 
             <!-- 条件筛选区块 -->
-            <GroupBox Header="筛选条件" Margin="10,0,10,10">
+            <GroupBox Header="筛选条件" Margin="10">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="10">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
-                            <Label Content="文件名:" Width="100"/>
-                            <TextBox x:Name="FileNamePattern" Width="200" Margin="5"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Label Content="创建日期:" Width="100"/>
-                            <DatePicker x:Name="CreatedAfterPicker" Width="200" Margin="5"/>
-                        </StackPanel>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- 时间区间选择 -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                        <Label Content="日期从" Width="60" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="StartPicker" Width="150" Margin="5"/>
+                        <Label Content="到" Width="30" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="EndPicker" Width="150" Margin="5"/>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="10">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
-                            <Label Content="编辑日期:" Width="100"/>
-                            <DatePicker x:Name="ModifiedAfterPicker" Width="200" Margin="5"/>
-                        </StackPanel>
-                        <Button Content="按条件筛选" Click="FilterFiles_Click" Width="120" HorizontalAlignment="Left"/>
+
+                    <!-- 文件名和时间复选框以及筛选按钮 -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                        <Label Content="筛选条件：" Width="80" VerticalAlignment="Center"/>
+                        <!-- 复选框 -->
+                        <CheckBox x:Name="FileNameCheckBox" Content="文件名" Margin="5" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="CreatedTimeCheckBox" Content="创建时间" Margin="5" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="ModifiedTimeCheckBox" Content="编辑时间" Margin="5" VerticalAlignment="Center"/>
+
+                        <!-- 筛选按钮 -->
+                        <Button x:Name="FilterButton" Click="FilterFiles_Click" Content="筛选" Width="60" Margin="5" />
                     </StackPanel>
                 </Grid>
             </GroupBox>
-
             <!-- 筛选结果预览区块 -->
             <GroupBox Header="筛选结果预览" Margin="10 0 10 2">
                 <StackPanel Margin="10">

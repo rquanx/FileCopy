@@ -75,7 +75,7 @@ namespace FileCopy
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string _authorInfo = "© 2023 RQ - 版本 1.0.3";
+        private string _authorInfo = "© 2023 RQ - 版本 1.1.0";
 
         public string AuthorInfo
         {
@@ -158,12 +158,51 @@ namespace FileCopy
                 MessageBox.Show("未扫描或扫描出文件数量为0.");
                 return;
             }
-            filteredList = fileList.Where(fileInfo => (string.IsNullOrWhiteSpace(FileNamePattern.Text) || fileInfo.Name.Contains(FileNamePattern.Text)) &&
-            (!CreatedAfterPicker.SelectedDate.HasValue || fileInfo.CreationTime?.Date == CreatedAfterPicker.SelectedDate.Value.Date) &&
-            (!ModifiedAfterPicker.SelectedDate.HasValue || fileInfo.LastWriteTime?.Date == ModifiedAfterPicker.SelectedDate.Value.Date))
-            .ToList();
+
+            DateTime? startDate = StartPicker.SelectedDate;
+            DateTime? endDate = EndPicker.SelectedDate;
+
+            // 确保结束日期不早于开始日期
+            if (startDate.HasValue && endDate.HasValue && endDate < startDate)
+            {
+                MessageBox.Show("结束日期必须大于或等于开始日期。");
+                return;
+            }
+
+            // 生成开始日期和结束日期之间的所有日期的字符串表示
+            var dateStrings = new List<string>();
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                for (DateTime date = startDate.Value; date <= endDate.Value; date = date.AddDays(1))
+                {
+                    dateStrings.Add(date.ToString("yyyyMMdd")); // 格式化日期字符串
+                }
+            }
+            // 检查是否有复选框被选中
+            bool isAnyCheckboxChecked = FileNameCheckBox.IsChecked == true || CreatedTimeCheckBox.IsChecked == true || ModifiedTimeCheckBox.IsChecked == true;
+            bool isDateAllSelected = startDate.HasValue && endDate.HasValue;
+            // 如果没有复选框被选中，则显示所有文件
+            if (!isAnyCheckboxChecked || !isDateAllSelected)
+            {
+                filteredList = fileList.ToList();
+            }
+            else
+            {
+                // 根据筛选条件进行筛选
+                filteredList = fileList.Where(fileInfo =>
+                // 文件名筛选（如果复选框选中）
+                (FileNameCheckBox.IsChecked != true || dateStrings.Any(d => fileInfo.Name.Contains(d))) &&
+
+                // 创建时间筛选（如果复选框选中）
+                (CreatedTimeCheckBox.IsChecked != true || (startDate == null || fileInfo.CreationTime?.Date >= startDate) && (endDate == null || fileInfo.CreationTime?.Date <= endDate)) &&
+
+                // 编辑时间筛选（如果复选框选中）
+                (ModifiedTimeCheckBox.IsChecked != true || (startDate == null || fileInfo.LastWriteTime?.Date >= startDate) && (endDate == null || fileInfo.LastWriteTime?.Date <= endDate))
+            ).ToList();
+            }
             DisplayPage(1);
         }
+
 
         private void DisplayPage(int pageNumber)
         {
