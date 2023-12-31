@@ -2,10 +2,18 @@
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 
 namespace FileCopy
 {
+
+    public enum ViewMode
+    {
+        Detail,
+        Thumbnail
+    }
+
     class EasyFile : INotifyPropertyChanged
     {
 
@@ -97,6 +105,27 @@ namespace FileCopy
         private int currentPage = 1; // 当前页码
         private List<EasyFile> currentPagedItems = new List<EasyFile>(); // 当前页的项目列表
 
+        private ViewMode _mode = ViewMode.Thumbnail;
+        public ViewMode Mode
+        {
+            get => _mode;
+            set
+            {
+                if (_mode != value)
+                {
+                    _mode = value;
+                    OnPropertyChanged(nameof(Mode));
+                    OnPropertyChanged(nameof(DetailVisibility));
+                    OnPropertyChanged(nameof(ThumbnailVisibility));
+                }
+            }
+        }
+
+        public Visibility DetailVisibility => _mode == ViewMode.Detail ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility ThumbnailVisibility => _mode == ViewMode.Thumbnail ? Visibility.Visible : Visibility.Collapsed;
+
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -150,7 +179,8 @@ namespace FileCopy
             HideOverlay();
 
             filteredList = new List<EasyFile>();
-            FilesListView.ItemsSource = filteredList;
+            DetailView.ItemsSource = filteredList;
+            ThumbnailView.ItemsSource = filteredList;
             DisplayPage(1);
         }
 
@@ -221,7 +251,8 @@ namespace FileCopy
             int endIndex = Math.Min(startIndex + ItemsPerPage - 1, totalItems - 1);
 
             currentPagedItems = filteredList.Skip(startIndex).Take(ItemsPerPage).ToList();
-            FilesListView.ItemsSource = currentPagedItems;
+            DetailView.ItemsSource = currentPagedItems;
+            ThumbnailView.ItemsSource = currentPagedItems;
             PageInfo.Text = $"页码: {currentPage} / {totalPages}";
         }
 
@@ -324,7 +355,8 @@ namespace FileCopy
 
         private void FilesListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (FilesListView.SelectedItem is EasyFile selectedFile)
+            var selectedItem = ThumbnailView.Visibility == Visibility.Visible ? ThumbnailView.SelectedItem : DetailView.SelectedItem;
+            if (selectedItem is EasyFile selectedFile)
             {
                 // 尝试打开文件
                 try
@@ -377,6 +409,11 @@ namespace FileCopy
                 }
             }
             DisplayPage(1);
+        }
+
+        private void ToggleViewMode_Click(object sender, RoutedEventArgs e)
+        {
+            Mode = Mode == ViewMode.Detail ? ViewMode.Thumbnail : ViewMode.Detail;
         }
 
     }

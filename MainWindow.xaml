@@ -60,7 +60,7 @@
             <!-- 筛选结果预览区块 -->
             <GroupBox Header="筛选结果预览" Margin="10 0 10 2">
                 <StackPanel Margin="10">
-                    <ListBox x:Name="FilesListView" Height="300" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="FilesListView_MouseDoubleClick">
+                    <ListBox Visibility="{Binding ThumbnailVisibility}" x:Name="ThumbnailView" Height="300" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="FilesListView_MouseDoubleClick">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <!-- WrapPanel使项自动换行 -->
@@ -86,7 +86,38 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+
+                    <ListView Visibility="{Binding DetailVisibility}"  x:Name="DetailView" MouseDoubleClick="FilesListView_MouseDoubleClick" Height="300">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="文件名" DisplayMemberBinding="{Binding Name}" Width="380"/>
+                                <GridViewColumn Header="创建时间" Width="140">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CreationTime, StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="编辑时间"  Width="140">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding LastWriteTime, StringFormat='yyyy-MM-dd HH:mm:ss'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="复制结果" DisplayMemberBinding="{Binding IsCoped}" Width="80"/>
+                                <GridViewColumn Header="操作" Width="60">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="去除" Click="DeleteItem_Click"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Content="切换模式" Click="ToggleViewMode_Click" Margin="0,0,10,0"/>
                         <Button Content="去除已复制" Click="RemoveCoped_Click" Width="120" Margin="0,0,10,0"/>
                         <Button Content="&lt;&lt;" Click="FirstPage_Click" Margin="0,0,10,0" />
                         <Button Content="上一页" Click="PreviousPage_Click"/>
