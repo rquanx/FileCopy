@@ -22,9 +22,12 @@ namespace FileCopy
                 {
                     _isCoped = value;
                     OnPropertyChanged(nameof(IsCoped));
+                    OnPropertyChanged(nameof(CopiedVisibility));
                 }
             }
         }
+        public Visibility CopiedVisibility => IsCoped == "是" ? Visibility.Visible : Visibility.Collapsed;
+
 
         public string Name
         {
